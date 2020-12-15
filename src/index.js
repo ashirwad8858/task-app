@@ -49,6 +49,7 @@ app.get('/users',async (req,res)=>{
     try{
         const user = await User.find({})
         res.send(user)
+        res.send(5)
     }catch(e){
         res.status(500).send(e)
     }
@@ -163,6 +164,30 @@ app.patch('/task/:id', async (req,res)=>{
         res.send(task)
     }catch(e){
         res.status(400).send(e)
+    }
+})
+
+app.delete('/users/:id', async (req,res)=>{
+    try{
+        const user = await User.findByIdAndDelete(req.params.id)
+        if(!user){
+            res.status(404).send('User not found')
+        }
+        res.send(user)
+    }catch(e){
+        res.status(500).send()
+    }
+})
+
+app.delete('/task/:id', async (req,res)=>{
+    try{
+        const task = await Task.findByIdAndDelete(req.params.id)
+        if(!task){
+            res.status(404).send('task not found')
+        }
+        res.send(task)
+    }catch(e){
+        res.status(500).send()
     }
 })
 app.listen(port,()=>{
