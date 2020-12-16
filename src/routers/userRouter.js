@@ -3,7 +3,7 @@ const router = new express.Router()
 const User = require('../models/users')
 
 router.post('/users', async (req,res)=>{
-
+    console.log(req.body)
     try{
         const user = new User(req.body)
         await user.save()
@@ -20,11 +20,21 @@ router.post('/users', async (req,res)=>{
     
 })
 
+router.post('/users/login', async (req,res)=>{
+    try{
+        
+        const user =await User.findByCredentials(req.body.email, req.body.password)
+        // console.log(user)
+        res.send(user)
+    }catch(e){
+        res.status(400).send(e)
+    }
+})
+
 router.get('/users',async (req,res)=>{
     try{
         const user = await User.find({})
         res.send(user)
-        res.send(5)
     }catch(e){
         res.status(500).send(e)
     }
@@ -69,10 +79,17 @@ router.patch('/users/:id', async (req,res)=>{
     }
   
     try{
-      const user = await User.findByIdAndUpdate(req.params.id, req.body, { new:true , runValidators:true})
-      if(!user){
-          res.status(404).send('User not found')
-      }
+        const user = await User.findById(req.params.id) 
+        if(!user){
+            return res.status(404).send('User not found')
+         }
+        updates.forEach((item)=>{
+            user[item] = req.body[item]
+        })
+
+        await user.save()
+    //   const user = await User.findByIdAndUpdate(req.params.id, req.body, { new:true , runValidators:true})
+      
       res.send(user)
     }catch(e){
       res.status(400).send(e)
