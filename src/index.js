@@ -10,18 +10,18 @@ const taskRouter = require('./routers/taskRouter')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.use((req,res,next)=>{
-    if(req.method === 'GET'){
-        res.send('Get request is disable')
-    }else{
-        next()
-    }
+// app.use((req,res,next)=>{
+//     if(req.method === 'GET'){
+//         res.send('Get request is disable')
+//     }else{
+//         next()
+//     }
 
-})
+// })
 
-app.use((req,res,next)=>{
-    res.status(500).send('Site is under mentinance. Please try after some time')
-})
+// app.use((req,res,next)=>{
+//     res.status(500).send('Site is under mentinance. Please try after some time')
+// })
 
 app.use(express.json())
 app.use(userRouter)

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-const { __esModule } = require('validator/lib/isAlpha')
 
-const Task = mongoose.model('task',{
+const taskSchema = mongoose.Schema({
 
     description:{
         type:String,
@@ -12,6 +11,10 @@ const Task = mongoose.model('task',{
         type:Boolean,
         default:false,
     }
+},{
+    timestamp:true
 })
+
+const Task = mongoose.model('task', taskSchema)
 
 module.exports = Task 
