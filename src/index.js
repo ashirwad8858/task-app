@@ -1,8 +1,6 @@
 const express = require('express')
 require('./db/mongoos')
 
-const User = require('./models/users')
-const Task = require('./models/tasks')
 const userRouter = require('./routers/userRouter')
 const taskRouter = require('./routers/taskRouter')
 
@@ -31,11 +29,17 @@ app.listen(port,()=>{
     console.log('Server is up and running on '+port)
 })
 
-const jwt = require('jsonwebtoken')
+const Task = require('./models/tasks')
+const User = require('./models/users')
 
 const myFunction = async ()=>{
-    const token = jwt.sign({_id:'asb123!!'}, 'thisissecrate')
-    console.log(token)
+    // const task = await Task.findById('5fdcb13d3a993a21107c6c37')
+    // await task.populate('owner').execPopulate()
+    // console.log(task.owner)
+
+    const user = await User.findById('5fdc71bbee5a222b887c32d6')
+    await user.populate('owner').execPopulate()
+    console.log(user.tasks)
 }
 
 myFunction()
