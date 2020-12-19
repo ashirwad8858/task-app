@@ -3,6 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Task = require('./tasks')
+const { Binary } = require('mongodb')
 
 
 const userSchema = new mongoose.Schema({
@@ -42,6 +43,9 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Age must be positive')
             }
         } 
+    },
+    avatar:{
+        type:Buffer
     },
     tokens : [{
         token :{
