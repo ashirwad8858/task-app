@@ -4,14 +4,14 @@ const router = new express.Router()
 const User = require('../models/users')
 
 router.post('/users', async (req,res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     try{
         const user = new User(req.body)
         await user.save()
         const token = user.generateAuthToken()
-        res.send({user,token})
+        res.status(201).send({user,token})
     }catch(e){
-        res.status(400).send()
+        res.status(400).send(e)
     }
     // user.save().then(()=>{
     //     res.status(201).send(user)

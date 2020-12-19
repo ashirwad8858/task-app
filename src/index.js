@@ -38,7 +38,7 @@ const myFunction = async ()=>{
     // console.log(task.owner)
 
     const user = await User.findById('5fdc71bbee5a222b887c32d6')
-    await user.populate('owner').execPopulate()
+    await user.populate('tasks').execPopulate()
     console.log(user.tasks)
 }
 

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcrypt')
-const { use } = require('bcrypt/promises')
 const jwt = require('jsonwebtoken')
 const Task = require('./tasks')
 
@@ -37,7 +36,7 @@ const userSchema = new mongoose.Schema({
     },
     age : {
         type : Number,
-        default: true,
+        default: 0,
         validate(value){
             if(value<0){
                 throw new Error('Age must be positive')
@@ -81,7 +80,7 @@ userSchema.methods.generateAuthToken = async function(){
 }
 
 userSchema.statics.findByCredentials = async (email,password)=>{
-    const user =await User.findOne({ email : email})
+    const user =await User.findOne({ email })
     // console.log(user)
     if(!user){
         throw new Error('Wrong email')
