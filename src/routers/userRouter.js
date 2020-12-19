@@ -140,4 +140,10 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req,res)=>
     res.status(400).send({error:erro.message})
 })
 
+router.delete('/users/me/avatar', auth, async (req,res)=>{
+    req.user.avatar = undefined
+    await req.user.save()
+    res.send()
+})
+
 module.exports = router 
