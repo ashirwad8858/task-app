@@ -4,12 +4,14 @@ const router = new express.Router()
 const User = require('../models/users')
 const multer = require('multer')
 const sharp = require('sharp')
+const { sendWelcomMail } = require('../emails/accounts')
 
 router.post('/users', async (req,res)=>{
     // console.log(req.body)
     try{
         const user = new User(req.body)
         await user.save()
+        sendWelcomMail(user.email,user.name)
         const token = user.generateAuthToken()
         res.status(201).send({user,token})
     }catch(e){
