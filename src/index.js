@@ -21,6 +21,28 @@ const port = process.env.PORT || 3000
 //     res.status(500).send('Site is under mentinance. Please try after some time')
 // })
 
+const multer = require('multer')
+const upload = multer({
+    dest:'images',
+    limits:{
+        fileSize:1000000
+    },
+    fileFilter(req, file, cb){
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){   //file.originalname.endsWith('.pdf')
+            return cb(new Error('Please upload pdf'))
+        }
+
+        cb(undefined,true)
+    }
+
+})
+
+app.post('/upload', upload.single('upload'),(req,res)=>{
+    res.send()
+},(erro,req,res,next)=>{
+    res.status(400).send({error:erro.message})
+})
+
 app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
@@ -28,18 +50,3 @@ app.use(taskRouter)
 app.listen(port,()=>{
     console.log('Server is up and running on '+port)
 })
-
-const Task = require('./models/tasks')
-const User = require('./models/users')
-
-const myFunction = async ()=>{
-    // const task = await Task.findById('5fdcb13d3a993a21107c6c37')
-    // await task.populate('owner').execPopulate()
-    // console.log(task.owner)
-
-    const user = await User.findById('5fdc71bbee5a222b887c32d6')
-    await user.populate('owner').execPopulate()
-    console.log(user.tasks)
-}
-
-myFunction()
