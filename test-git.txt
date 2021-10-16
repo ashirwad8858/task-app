@@ -6,4 +6,4 @@ this is branch A chages
 
 
 
-this is branch b changes
+this is branch b chnges
