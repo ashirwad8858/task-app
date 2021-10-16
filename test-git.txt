@@ -6,4 +6,4 @@ this is branch A changes
 
 
 
-this is branch b changes
+this is branch b chnges
